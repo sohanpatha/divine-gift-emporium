@@ -1,62 +1,91 @@
+import { useEffect, useState } from "react";
 import { Truck, Shield, RotateCcw, Headphones } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import CategoryCard from "@/components/CategoryCard";
+import { supabase } from "@/integrations/supabase/client";
 
 // Import images
 import heroImage from "@/assets/hero-sports.jpg";
-import cricketCategory from "@/assets/category-cricket.jpg";
-import footballCategory from "@/assets/category-football.jpg";
-import giftsCategory from "@/assets/category-gifts.jpg";
-import fitnessCategory from "@/assets/category-fitness.jpg";
-import cricketBat from "@/assets/product-cricket-bat.jpg";
-import football from "@/assets/product-football.jpg";
-import dumbbells from "@/assets/product-dumbbells.jpg";
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image_url: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  original_price: number;
+  discount_percentage: number;
+  image_url: string;
+  stock_quantity: number;
+  brand: string;
+  is_featured: boolean;
+  rating: number;
+  review_count: number;
+  category: {
+    name: string;
+  };
+}
 
 const Index = () => {
-  const categories = [
-    { name: "Cricket Equipment", image: cricketCategory, productCount: 150 },
-    { name: "Football & Soccer", image: footballCategory, productCount: 89 },
-    { name: "Fitness & Gym", image: fitnessCategory, productCount: 120 },
-    { name: "Gifts & Accessories", image: giftsCategory, productCount: 200 },
-  ];
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const featuredProducts = [
-    {
-      id: "1",
-      name: "Professional Cricket Bat",
-      price: 2499,
-      originalPrice: 2999,
-      rating: 4.5,
-      reviews: 128,
-      image: cricketBat,
-      category: "Cricket",
-      isNew: true,
-      discount: 17
-    },
-    {
-      id: "2", 
-      name: "Premium Football",
-      price: 899,
-      rating: 4.2,
-      reviews: 89,
-      image: football,
-      category: "Football"
-    },
-    {
-      id: "3",
-      name: "Adjustable Dumbbells Set",
-      price: 3499,
-      originalPrice: 3999,
-      rating: 4.7,
-      reviews: 156,
-      image: dumbbells,
-      category: "Fitness",
-      discount: 13
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      // Fetch categories
+      const { data: categoriesData, error: categoriesError } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name');
+
+      if (categoriesError) throw categoriesError;
+
+      // Fetch featured products
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select(`
+          *,
+          category:categories(name)
+        `)
+        .eq('is_featured', true)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (productsError) throw productsError;
+
+      setCategories(categoriesData || []);
+      setProducts(productsData || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-8 text-center">
+          <div className="text-lg">Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
   const features = [
     {
@@ -149,12 +178,12 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <CategoryCard 
-                key={index}
+                key={category.id}
                 name={category.name}
-                image={category.image}
-                productCount={category.productCount}
+                image={category.image_url}
+                productCount={0} // You can add a count field to categories table later
               />
             ))}
           </div>
@@ -174,8 +203,20 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
+            {products.map((product) => (
+              <ProductCard 
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                price={Number(product.price)}
+                originalPrice={product.original_price ? Number(product.original_price) : undefined}
+                rating={Number(product.rating)}
+                reviews={product.review_count}
+                image={product.image_url}
+                category={product.category.name}
+                isNew={false} // You can add logic for new products
+                discount={product.discount_percentage}
+              />
             ))}
           </div>
           

@@ -1,8 +1,22 @@
-import { Search, ShoppingCart, User, Menu, Heart } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, Heart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
+import { useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
+  const { user, signOut } = useAuth();
+  const { getTotalItems } = useCart();
+  const navigate = useNavigate();
+
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container mx-auto px-4 py-4">
@@ -32,27 +46,61 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Navigation Icons */}
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="relative hidden sm:flex">
-              <Heart className="h-5 w-5" />
-            </Button>
-            
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                0
-              </span>
-            </Button>
+           {/* Navigation Icons */}
+           <div className="flex items-center gap-2">
+             <Button variant="ghost" size="icon" className="relative hidden sm:flex">
+               <Heart className="h-5 w-5" />
+             </Button>
+             
+             <Button 
+               variant="ghost" 
+               size="icon" 
+               className="relative"
+               onClick={() => navigate('/cart')}
+             >
+               <ShoppingCart className="h-5 w-5" />
+               {getTotalItems() > 0 && (
+                 <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                   {getTotalItems()}
+                 </span>
+               )}
+             </Button>
 
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
+             {user ? (
+               <DropdownMenu>
+                 <DropdownMenuTrigger asChild>
+                   <Button variant="ghost" size="icon">
+                     <User className="h-5 w-5" />
+                   </Button>
+                 </DropdownMenuTrigger>
+                 <DropdownMenuContent align="end">
+                   <DropdownMenuItem disabled>
+                     {user.email}
+                   </DropdownMenuItem>
+                   <DropdownMenuSeparator />
+                   <DropdownMenuItem onClick={() => navigate('/orders')}>
+                     My Orders
+                   </DropdownMenuItem>
+                   <DropdownMenuItem onClick={() => navigate('/profile')}>
+                     Profile
+                   </DropdownMenuItem>
+                   <DropdownMenuSeparator />
+                   <DropdownMenuItem onClick={signOut}>
+                     <LogOut className="h-4 w-4 mr-2" />
+                     Sign Out
+                   </DropdownMenuItem>
+                 </DropdownMenuContent>
+               </DropdownMenu>
+             ) : (
+               <Button variant="outline" onClick={() => navigate('/auth')}>
+                 Sign In
+               </Button>
+             )}
 
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </div>
+             <Button variant="ghost" size="icon" className="md:hidden">
+               <Menu className="h-5 w-5" />
+             </Button>
+           </div>
         </div>
 
         {/* Mobile Search */}
