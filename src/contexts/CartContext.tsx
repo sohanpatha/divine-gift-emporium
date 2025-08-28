@@ -17,12 +17,13 @@ interface CartItem {
 }
 
 interface CartContextType {
-  items: CartItem[];
+  cartItems: CartItem[];
   loading: boolean;
   addToCart: (productId: string, quantity?: number) => Promise<void>;
   updateQuantity: (productId: string, quantity: number) => Promise<void>;
   removeFromCart: (productId: string) => Promise<void>;
   clearCart: () => Promise<void>;
+  getCartTotal: () => number;
   getTotalPrice: () => number;
   getTotalItems: () => number;
 }
@@ -202,7 +203,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const getTotalPrice = () => {
+  const getCartTotal = () => {
     return items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   };
 
@@ -211,13 +212,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const value = {
-    items,
+    cartItems: items,
     loading,
     addToCart,
     updateQuantity,
     removeFromCart,
     clearCart,
-    getTotalPrice,
+    getCartTotal,
+    getTotalPrice: getCartTotal,
     getTotalItems,
   };
 

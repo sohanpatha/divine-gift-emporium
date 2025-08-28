@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag, CreditCard } from 'lucide-react';
 import Header from '@/components/Header';
 
 const Cart = () => {
-  const { items, loading, updateQuantity, removeFromCart, getTotalPrice, getTotalItems } = useCart();
+  const { cartItems: items, loading, updateQuantity, removeFromCart, getTotalPrice, getTotalItems } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -155,7 +155,13 @@ const Cart = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full mb-3" size="lg">
+                <Button 
+                  className="w-full" 
+                  size="lg"
+                  disabled={items.length === 0}
+                  onClick={() => navigate('/checkout')}
+                >
+                  <CreditCard className="h-4 w-4 mr-2" />
                   Proceed to Checkout
                 </Button>
                 <Button variant="outline" className="w-full" onClick={() => navigate('/')}>
