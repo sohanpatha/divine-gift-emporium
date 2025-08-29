@@ -2,62 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* E-commerce Design System for Laxmi Ganapathi Gift Corner Sports Center */
+/* Clean Minimal E-commerce Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 13% 18%;
+    --background: 0 0% 98%;
+    --foreground: 215 25% 27%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 13% 18%;
+    --card-foreground: 215 25% 27%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 18%;
+    --popover-foreground: 215 25% 27%;
 
-    /* Sports-themed orange/red primary */
-    --primary: 16 85% 55%;
+    /* Refined primary with softer orange */
+    --primary: 24 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 16 85% 45%;
+    --primary-hover: 24 100% 45%;
 
-    /* Clean secondary */
-    --secondary: 220 13% 95%;
-    --secondary-foreground: 220 13% 18%;
+    /* Ultra clean secondary */
+    --secondary: 210 11% 96%;
+    --secondary-foreground: 215 25% 27%;
 
-    --muted: 220 13% 96%;
-    --muted-foreground: 220 13% 46%;
+    --muted: 210 11% 97%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 25 95% 53%;
+    --accent: 32 100% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 73% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 16 85% 55%;
+    --border: 214 13% 92%;
+    --input: 214 13% 92%;
+    --ring: 24 100% 50%;
 
-    /* E-commerce specific colors */
-    --success: 142 76% 36%;
+    /* Status colors */
+    --success: 142 69% 58%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
+    --warning: 35 91% 65%;
     --warning-foreground: 0 0% 100%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(16 85% 55%), hsl(25 95% 53%));
-    --gradient-hero: linear-gradient(135deg, hsl(16 85% 55% / 0.1), hsl(25 95% 53% / 0.05));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 13% 98%));
+    /* Minimal gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(24 100% 50%), hsl(32 100% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(24 100% 50% / 0.03), hsl(32 100% 50% / 0.01));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 11% 99%));
 
-    /* Shadows */
-    --shadow-card: 0 2px 8px hsl(220 13% 18% / 0.08);
-    --shadow-card-hover: 0 8px 25px hsl(220 13% 18% / 0.15);
-    --shadow-primary: 0 4px 14px hsl(16 85% 55% / 0.25);
+    /* Soft depth shadows */
+    --shadow-soft: 0 1px 3px hsl(215 25% 27% / 0.04), 0 1px 2px hsl(215 25% 27% / 0.06);
+    --shadow-card: 0 2px 8px hsl(215 25% 27% / 0.04), 0 1px 3px hsl(215 25% 27% / 0.08);
+    --shadow-card-hover: 0 4px 20px hsl(215 25% 27% / 0.08), 0 2px 8px hsl(215 25% 27% / 0.12);
+    --shadow-primary: 0 2px 12px hsl(24 100% 50% / 0.15);
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Animations & Transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.2s ease-out;
+    /* Smooth transitions */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease-out;
   }
 
   .dark {
@@ -67,7 +68,7 @@
     --card: 220 13% 11%;
     --card-foreground: 220 13% 98%;
 
-    --primary: 16 85% 55%;
+    --primary: 24 100% 50%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 220 13% 15%;
@@ -76,16 +77,17 @@
     --muted: 220 13% 15%;
     --muted-foreground: 220 13% 65%;
 
-    --accent: 25 95% 53%;
+    --accent: 32 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --border: 220 13% 18%;
     --input: 220 13% 18%;
-    --ring: 16 85% 55%;
+    --ring: 24 100% 50%;
 
-    /* Dark mode shadows */
-    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
-    --shadow-card-hover: 0 8px 25px hsl(0 0% 0% / 0.4);
+    /* Dark mode soft shadows */
+    --shadow-soft: 0 1px 3px hsl(0 0% 0% / 0.2), 0 1px 2px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.2), 0 1px 3px hsl(0 0% 0% / 0.4);
+    --shadow-card-hover: 0 4px 20px hsl(0 0% 0% / 0.3), 0 2px 8px hsl(0 0% 0% / 0.5);
   }
 }
 
@@ -117,7 +119,7 @@
 }
 
 @layer components {
-  /* E-commerce specific utility classes */
+  /* Clean minimal utility classes */
   .gradient-primary {
     background: var(--gradient-primary);
   }
@@ -128,6 +130,10 @@
 
   .gradient-card {
     background: var(--gradient-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
   }
 
   .shadow-card {
@@ -148,5 +154,18 @@
 
   .transition-fast {
     transition: var(--transition-fast);
+  }
+
+  /* Card layout patterns */
+  .card-minimal {
+    @apply bg-card shadow-card rounded-xl border-0 transition-smooth;
+  }
+
+  .card-minimal:hover {
+    @apply shadow-card-hover;
+  }
+
+  .card-elevated {
+    @apply bg-card shadow-card-hover rounded-xl border-0;
   }
 }

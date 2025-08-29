@@ -123,109 +123,114 @@ const Orders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-sports">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
-          className="mb-6 text-white hover:bg-white/10"
+          className="mb-8 text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Home
         </Button>
 
-        <Card className="backdrop-blur-sm bg-card/90">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Package className="h-5 w-5 mr-2" />
-              My Orders
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {orders.length === 0 ? (
-              <div className="text-center py-8">
-                <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No orders yet</h3>
-                <p className="text-muted-foreground mb-4">
-                  When you make your first purchase, it will appear here.
-                </p>
-                <Button onClick={() => navigate('/')}>
-                  Start Shopping
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {orders.map((order) => (
-                  <Card key={order.id} className="border">
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-semibold">Order #{order.order_number}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            Placed on {new Date(order.created_at).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-lg">₹{order.total_amount.toLocaleString()}</p>
-                          <div className="flex gap-2 mt-1">
-                            <Badge className={getStatusColor(order.status)}>
-                              {order.status}
-                            </Badge>
-                            <Badge className={getPaymentStatusColor(order.payment_status)}>
-                              {order.payment_status}
-                            </Badge>
+        <div className="space-y-8">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold tracking-tight">My Orders</h1>
+            <p className="text-muted-foreground">Track and manage your order history</p>
+          </div>
+
+          <Card className="card-minimal">
+            <CardContent className="p-8">
+              {orders.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="p-4 bg-muted/20 rounded-full w-fit mx-auto mb-4">
+                    <Package className="h-12 w-12 text-muted-foreground/40" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">No orders yet</h3>
+                  <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
+                    When you make your first purchase, it will appear here.
+                  </p>
+                  <Button onClick={() => navigate('/')} className="h-11 px-8">
+                    Start Shopping
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {orders.map((order) => (
+                    <Card key={order.id} className="card-minimal border">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="space-y-1">
+                            <h3 className="font-semibold text-lg">Order #{order.order_number}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              Placed on {new Date(order.created_at).toLocaleDateString('en-IN', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                              })}
+                            </p>
+                          </div>
+                          <div className="text-right space-y-2">
+                            <p className="font-bold text-xl">₹{order.total_amount.toLocaleString()}</p>
+                            <div className="flex gap-2">
+                              <Badge className={`${getStatusColor(order.status)} font-medium`}>
+                                {order.status}
+                              </Badge>
+                              <Badge className={`${getPaymentStatusColor(order.payment_status)} font-medium`}>
+                                {order.payment_status}
+                              </Badge>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </CardHeader>
-                    
-                    <CardContent>
-                      <div className="space-y-3">
-                        {order.order_items.map((item, index) => (
-                          <div key={index} className="flex justify-between items-center">
-                            <div className="flex items-center space-x-3">
-                              {item.products?.image_url && (
-                                <img 
-                                  src={item.products.image_url} 
-                                  alt={item.products.name || 'Product'}
-                                  className="w-12 h-12 object-cover rounded"
-                                />
-                              )}
-                              <div>
-                                <p className="font-medium">{item.products?.name || 'Product'}</p>
-                                <p className="text-sm text-muted-foreground">
-                                  Quantity: {item.quantity}
-                                </p>
+                        
+                        <div className="space-y-4">
+                          {order.order_items.map((item, index) => (
+                            <div key={index} className="flex justify-between items-center py-3 border-b last:border-0">
+                              <div className="flex items-center space-x-4">
+                                {item.products?.image_url && (
+                                  <img 
+                                    src={item.products.image_url} 
+                                    alt={item.products.name || 'Product'}
+                                    className="w-16 h-16 object-cover rounded-lg"
+                                  />
+                                )}
+                                <div className="space-y-1">
+                                  <p className="font-semibold">{item.products?.name || 'Product'}</p>
+                                  <p className="text-sm text-muted-foreground">
+                                    Quantity: {item.quantity}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-bold">₹{(item.price * item.quantity).toLocaleString()}</p>
                               </div>
                             </div>
-                            <div className="text-right">
-                              <p className="font-medium">₹{(item.price * item.quantity).toLocaleString()}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <Separator className="my-4" />
-
-                      <div className="flex justify-between items-center">
-                        <div className="text-sm text-muted-foreground">
-                          Shipping to: {order.shipping_address?.city}, {order.shipping_address?.state}
+                          ))}
                         </div>
-                        <Button variant="outline" size="sm">
-                          <Eye className="h-4 w-4 mr-2" />
-                          View Details
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+
+                        <Separator className="my-6" />
+
+                        <div className="flex justify-between items-center">
+                          <div className="text-sm text-muted-foreground">
+                            Shipping to: {order.shipping_address?.city}, {order.shipping_address?.state}
+                          </div>
+                          <Button variant="outline" size="sm" className="h-9">
+                            <Eye className="h-4 w-4 mr-2" />
+                            View Details
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Orders;
+  export default Orders;

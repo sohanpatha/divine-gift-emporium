@@ -175,7 +175,6 @@ const Profile = () => {
         description: "Address added successfully.",
       });
 
-      // Reset form and refetch addresses
       setNewAddress({
         full_name: '',
         address_line_1: '',
@@ -206,98 +205,93 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-sports">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
-          className="mb-6 text-white hover:bg-white/10"
+          className="mb-8 text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Home
         </Button>
 
-        <Card className="backdrop-blur-sm bg-card/90">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <User className="h-5 w-5 mr-2" />
-              My Profile
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="profile" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="profile">Profile</TabsTrigger>
-                <TabsTrigger value="addresses">Addresses</TabsTrigger>
-                <TabsTrigger value="orders">Orders</TabsTrigger>
-              </TabsList>
+        <div className="space-y-8">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold tracking-tight">My Profile</h1>
+            <p className="text-muted-foreground">Manage your account settings and preferences</p>
+          </div>
 
-              <TabsContent value="profile">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={updateProfile} className="space-y-4">
-                      <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={user.email || ''}
-                          disabled
-                          className="bg-muted"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="full_name">Full Name</Label>
-                        <Input
-                          id="full_name"
-                          value={profile.full_name}
-                          onChange={(e) => setProfile(prev => ({ ...prev, full_name: e.target.value }))}
-                          placeholder="Enter your full name"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="phone">Phone</Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          value={profile.phone}
-                          onChange={(e) => setProfile(prev => ({ ...prev, phone: e.target.value }))}
-                          placeholder="Enter your phone number"
-                        />
-                      </div>
+          <Card className="card-minimal">
+            <CardContent className="p-8">
+              <Tabs defaultValue="profile" className="space-y-8">
+                <TabsList className="grid w-full grid-cols-3 bg-muted/50">
+                  <TabsTrigger value="profile">Profile</TabsTrigger>
+                  <TabsTrigger value="addresses">Addresses</TabsTrigger>
+                  <TabsTrigger value="orders">Orders</TabsTrigger>
+                </TabsList>
 
-                      <Button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Updating...' : 'Update Profile'}
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                <TabsContent value="profile" className="space-y-6">
+                  <Card className="card-minimal border">
+                    <CardContent className="p-6">
+                      <form onSubmit={updateProfile} className="space-y-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="email">Email</Label>
+                          <Input
+                            id="email"
+                            type="email"
+                            value={user.email || ''}
+                            disabled
+                            className="bg-muted/50 h-11"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="full_name">Full Name</Label>
+                          <Input
+                            id="full_name"
+                            value={profile.full_name}
+                            onChange={(e) => setProfile(prev => ({ ...prev, full_name: e.target.value }))}
+                            placeholder="Enter your full name"
+                            className="h-11"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="phone">Phone</Label>
+                          <Input
+                            id="phone"
+                            type="tel"
+                            value={profile.phone}
+                            onChange={(e) => setProfile(prev => ({ ...prev, phone: e.target.value }))}
+                            placeholder="Enter your phone number"
+                            className="h-11"
+                          />
+                        </div>
 
-              <TabsContent value="addresses">
-                <div className="space-y-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center">
-                        <MapPin className="h-5 w-5 mr-2" />
-                        Saved Addresses
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
+                        <Button type="submit" disabled={isLoading} className="h-11 px-8">
+                          {isLoading ? 'Updating...' : 'Update Profile'}
+                        </Button>
+                      </form>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="addresses" className="space-y-6">
+                  <Card className="card-minimal border">
+                    <CardContent className="p-6">
                       {addresses.length === 0 ? (
-                        <p className="text-muted-foreground">No addresses saved yet.</p>
+                        <div className="text-center py-8">
+                          <MapPin className="h-12 w-12 mx-auto text-muted-foreground/40 mb-3" />
+                          <p className="text-muted-foreground">No addresses saved yet.</p>
+                        </div>
                       ) : (
-                        <div className="grid gap-4">
+                        <div className="space-y-4">
                           {addresses.map((address) => (
-                            <div key={address.id} className="p-4 border rounded-lg">
+                            <div key={address.id} className="p-4 bg-muted/20 rounded-lg border">
                               <div className="flex justify-between items-start">
-                                <div>
-                                  <p className="font-medium">{address.full_name}</p>
+                                <div className="space-y-1">
+                                  <p className="font-semibold">{address.full_name}</p>
                                   <p className="text-sm text-muted-foreground">
                                     {address.address_line_1}
                                     {address.address_line_2 && `, ${address.address_line_2}`}
@@ -305,12 +299,9 @@ const Profile = () => {
                                   <p className="text-sm text-muted-foreground">
                                     {address.city}, {address.state} {address.postal_code}
                                   </p>
-                                  <p className="text-sm text-muted-foreground">
-                                    {address.country} • {address.phone}
-                                  </p>
                                 </div>
                                 {address.is_default && (
-                                  <span className="bg-primary/10 text-primary px-2 py-1 text-xs rounded">
+                                  <span className="bg-primary/10 text-primary px-3 py-1 text-xs rounded-full">
                                     Default
                                   </span>
                                 )}
@@ -321,118 +312,27 @@ const Profile = () => {
                       )}
                     </CardContent>
                   </Card>
+                </TabsContent>
 
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Add New Address</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <form onSubmit={addAddress} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="col-span-2">
-                            <Label htmlFor="new_full_name">Full Name</Label>
-                            <Input
-                              id="new_full_name"
-                              value={newAddress.full_name}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, full_name: e.target.value }))}
-                              required
-                            />
-                          </div>
-                          
-                          <div className="col-span-2">
-                            <Label htmlFor="new_address_line_1">Address Line 1</Label>
-                            <Input
-                              id="new_address_line_1"
-                              value={newAddress.address_line_1}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, address_line_1: e.target.value }))}
-                              required
-                            />
-                          </div>
-                          
-                          <div className="col-span-2">
-                            <Label htmlFor="new_address_line_2">Address Line 2</Label>
-                            <Input
-                              id="new_address_line_2"
-                              value={newAddress.address_line_2}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, address_line_2: e.target.value }))}
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label htmlFor="new_city">City</Label>
-                            <Input
-                              id="new_city"
-                              value={newAddress.city}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, city: e.target.value }))}
-                              required
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label htmlFor="new_state">State</Label>
-                            <Input
-                              id="new_state"
-                              value={newAddress.state}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, state: e.target.value }))}
-                              required
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label htmlFor="new_postal_code">Postal Code</Label>
-                            <Input
-                              id="new_postal_code"
-                              value={newAddress.postal_code}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, postal_code: e.target.value }))}
-                              required
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label htmlFor="new_phone">Phone</Label>
-                            <Input
-                              id="new_phone"
-                              type="tel"
-                              value={newAddress.phone}
-                              onChange={(e) => setNewAddress(prev => ({ ...prev, phone: e.target.value }))}
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <Button type="submit" disabled={isLoading}>
-                          {isLoading ? 'Adding...' : 'Add Address'}
+                <TabsContent value="orders" className="space-y-6">
+                  <Card className="card-minimal border">
+                    <CardContent className="pt-6">
+                      <div className="text-center py-8">
+                        <Package className="h-12 w-12 mx-auto text-muted-foreground/40 mb-4" />
+                        <p className="text-muted-foreground mb-6">
+                          View your complete order history
+                        </p>
+                        <Button onClick={() => navigate('/orders')} className="h-11 px-8">
+                          View All Orders
                         </Button>
-                      </form>
+                      </div>
                     </CardContent>
                   </Card>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="orders">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Package className="h-5 w-5 mr-2" />
-                      Order History
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-center py-8">
-                      <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                      <p className="text-muted-foreground mb-4">
-                        View your complete order history
-                      </p>
-                      <Button onClick={() => navigate('/orders')}>
-                        View All Orders
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
