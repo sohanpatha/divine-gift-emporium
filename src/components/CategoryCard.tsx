@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 interface CategoryCardProps {
   name: string;
@@ -7,8 +8,13 @@ interface CategoryCardProps {
 }
 
 const CategoryCard = ({ name, image, productCount }: CategoryCardProps) => {
+  const navigate = useNavigate();
+  
   return (
-    <Card className="group hover:shadow-card-hover transition-smooth cursor-pointer overflow-hidden">
+    <Card 
+      className="group hover:shadow-card-hover transition-smooth cursor-pointer overflow-hidden"
+      onClick={() => navigate(`/categories/${name.toLowerCase().replace(/\s+/g, '-')}`)}
+    >
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
         <img 
           src={image} 

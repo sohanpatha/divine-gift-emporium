@@ -38,17 +38,57 @@ const Header = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Search for sports equipment, gifts, and more..."
-                className="pl-10 pr-4 h-12 border-2 focus:border-primary"
+                className="pl-10 pr-4 h-12 border-2 focus:border-primary bg-background"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const query = (e.target as HTMLInputElement).value;
+                    if (query.trim()) {
+                      navigate(`/categories?search=${encodeURIComponent(query)}`);
+                    }
+                  }
+                }}
               />
-              <Button variant="hero" size="sm" className="absolute right-1 top-1 bottom-1 px-6">
+              <Button 
+                variant="hero" 
+                size="sm" 
+                className="absolute right-1 top-1 bottom-1 px-6"
+                onClick={() => {
+                  const input = document.querySelector('input[placeholder*="Search for sports"]') as HTMLInputElement;
+                  const query = input?.value;
+                  if (query?.trim()) {
+                    navigate(`/categories?search=${encodeURIComponent(query)}`);
+                  }
+                }}
+              >
                 Search
               </Button>
             </div>
           </div>
 
+           {/* Navigation Links */}
+           <div className="hidden lg:flex items-center gap-6 mr-6">
+             <Button variant="ghost" onClick={() => navigate('/')}>
+               Home
+             </Button>
+             <Button variant="ghost" onClick={() => navigate('/categories')}>
+               All Categories
+             </Button>
+             <Button variant="ghost" onClick={() => navigate('/categories/sports-center')}>
+               Sports
+             </Button>
+             <Button variant="ghost" onClick={() => navigate('/categories/gifts')}>
+               Gifts
+             </Button>
+           </div>
+
            {/* Navigation Icons */}
            <div className="flex items-center gap-2">
-             <Button variant="ghost" size="icon" className="relative hidden sm:flex">
+             <Button 
+               variant="ghost" 
+               size="icon" 
+               className="relative hidden sm:flex"
+               onClick={() => navigate('/wishlist')}
+             >
                <Heart className="h-5 w-5" />
              </Button>
              
@@ -110,8 +150,27 @@ const Header = () => {
             <Input
               placeholder="Search products..."
               className="pl-10 pr-20"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const query = (e.target as HTMLInputElement).value;
+                  if (query.trim()) {
+                    navigate(`/categories?search=${encodeURIComponent(query)}`);
+                  }
+                }
+              }}
             />
-            <Button variant="hero" size="sm" className="absolute right-1 top-1 bottom-1">
+            <Button 
+              variant="hero" 
+              size="sm" 
+              className="absolute right-1 top-1 bottom-1"
+              onClick={() => {
+                const input = document.querySelector('input[placeholder="Search products..."]') as HTMLInputElement;
+                const query = input?.value;
+                if (query?.trim()) {
+                  navigate(`/categories?search=${encodeURIComponent(query)}`);
+                }
+              }}
+            >
               Search
             </Button>
           </div>
