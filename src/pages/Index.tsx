@@ -129,10 +129,20 @@ const Index = () => {
                 Discover premium sports equipment, fitness gear, and perfect gifts for every athlete at Laxmi Ganapathi Gift Corner Sports Center.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="hero" size="lg" className="text-lg px-8">
+                <Button 
+                  variant="hero" 
+                  size="lg" 
+                  className="text-lg px-8"
+                  onClick={() => window.location.href = '/categories'}
+                >
                   Shop Now
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-lg px-8"
+                  onClick={() => window.location.href = '/categories'}
+                >
                   Browse Categories
                 </Button>
               </div>
@@ -221,7 +231,12 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-12">
-            <Button variant="hero" size="lg" className="px-12">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="px-12"
+              onClick={() => window.location.href = '/categories'}
+            >
               View All Products
             </Button>
           </div>
@@ -237,7 +252,12 @@ const Index = () => {
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied customers who trust us for their sports equipment needs
           </p>
-          <Button variant="secondary" size="lg" className="px-12 text-lg font-semibold">
+          <Button 
+            variant="secondary" 
+            size="lg" 
+            className="px-12 text-lg font-semibold"
+            onClick={() => window.location.href = '/categories'}
+          >
             Start Shopping Today
           </Button>
         </div>
@@ -265,20 +285,20 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2 text-sm opacity-70">
-                <li><a href="#" className="hover:opacity-100 transition-opacity">About Us</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Contact</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Track Order</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Support</a></li>
+                <li><a href="/" className="hover:opacity-100 transition-opacity">About Us</a></li>
+                <li><a href="/" className="hover:opacity-100 transition-opacity">Contact</a></li>
+                <li><a href="/orders" className="hover:opacity-100 transition-opacity">Track Order</a></li>
+                <li><a href="/" className="hover:opacity-100 transition-opacity">Support</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold mb-4">Categories</h4>
               <ul className="space-y-2 text-sm opacity-70">
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Cricket</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Football</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Fitness</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Gifts</a></li>
+                <li><a href="/categories/sports-center" className="hover:opacity-100 transition-opacity">Sports Center</a></li>
+                <li><a href="/categories/gifts" className="hover:opacity-100 transition-opacity">Gifts</a></li>
+                <li><a href="/categories/frames" className="hover:opacity-100 transition-opacity">Frames</a></li>
+                <li><a href="/categories/teddies" className="hover:opacity-100 transition-opacity">Teddies</a></li>
               </ul>
             </div>
             
