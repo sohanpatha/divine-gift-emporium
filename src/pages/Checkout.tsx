@@ -124,8 +124,8 @@ const Checkout = () => {
       // Clear cart on successful checkout creation
       clearCart();
       
-      // Redirect to Stripe Checkout
-      window.location.href = data.url;
+      // Open Stripe checkout in a new tab
+      window.open(data.url, '_blank', 'noopener,noreferrer');
 
     } catch (error) {
       console.error('Checkout error:', error);

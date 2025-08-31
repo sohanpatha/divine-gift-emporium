@@ -146,6 +146,14 @@ serve(async (req) => {
 
     // Create Stripe checkout session
     console.log("Creating Stripe checkout session");
+    // Determine app origin robustly
+    const appUrl = Deno.env.get("APP_URL");
+    const referer = req.headers.get("referer");
+    const parsedReferer = referer ? new URL(referer) : null;
+    const origin = req.headers.get("origin") || (parsedReferer ? parsedReferer.origin : appUrl);
+    if (!origin) {
+      throw new Error("Unable to determine app origin. Set APP_URL secret in Supabase.");
+    }
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
@@ -160,8 +168,8 @@ serve(async (req) => {
         quantity: item.quantity,
       })),
       mode: "payment",
-      success_url: `${req.headers.get("origin")}/order-success?session_id={CHECKOUT_SESSION_ID}&order_id=${orderData.id}`,
-      cancel_url: `${req.headers.get("origin")}/cart`,
+      success_url: `${origin}/order-success?session_id={CHECKOUT_SESSION_ID}&order_id=${orderData.id}`,
+      cancel_url: `${origin}/cart`,
       metadata: {
         order_id: orderData.id,
         user_id: user.id,
