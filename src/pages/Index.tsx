@@ -271,15 +271,15 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="gradient-primary rounded-lg p-2">
-                  <span className="text-xl font-bold text-white">LG</span>
-                </div>
-                <div>
-                  <h3 className="font-bold">Laxmi Ganapathi</h3>
-                  <p className="text-sm opacity-70">Gift Corner Sports Center</p>
-                </div>
-              </div>
+          <div className="flex items-center gap-2 mb-4 hover-lift">
+            <div className="gradient-primary rounded-lg p-2 hover-glow">
+              <span className="text-xl font-bold text-white">LG</span>
+            </div>
+            <div>
+              <h3 className="font-bold">Laxmi Ganapathi</h3>
+              <p className="text-sm opacity-70">Gift Corner Sports Center</p>
+            </div>
+          </div>
               <p className="text-sm opacity-70">
                 Your trusted partner for premium sports equipment and gifts since 1995.
               </p>
@@ -291,7 +291,7 @@ const Index = () => {
                 <li><a href="/" className="hover:opacity-100 transition-opacity">About Us</a></li>
                 <li><a href="/" className="hover:opacity-100 transition-opacity">Contact</a></li>
                 <li><a href="/orders" className="hover:opacity-100 transition-opacity">Track Order</a></li>
-                <li><a href="/" className="hover:opacity-100 transition-opacity">Support</a></li>
+                <li><a href="/admin" className="hover:opacity-100 transition-opacity">Admin Panel</a></li>
               </ul>
             </div>
             
