@@ -119,20 +119,20 @@ const Index = () => {
         <div className="absolute inset-0 gradient-hero" />
         <div className="relative container mx-auto px-4 py-16 lg:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
+            <div className="space-y-6 animate-fade-in">
+              <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight animate-slide-up">
                 Your Premier
                 <span className="gradient-primary bg-clip-text text-transparent"> Sports</span>
                 <br />Destination
               </h1>
-              <p className="text-xl text-muted-foreground max-w-lg">
+              <p className="text-xl text-muted-foreground max-w-lg animate-slide-up stagger-1">
                 Discover premium sports equipment, fitness gear, and perfect gifts for every athlete at Laxmi Ganapathi Gift Corner Sports Center.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 animate-slide-up stagger-2">
                 <Button 
                   variant="hero" 
                   size="lg" 
-                  className="text-lg px-8"
+                  className="text-lg px-8 hover-glow"
                   onClick={() => window.location.href = '/categories'}
                 >
                   Shop Now
@@ -140,18 +140,19 @@ const Index = () => {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="text-lg px-8"
+                  className="text-lg px-8 hover-lift"
                   onClick={() => window.location.href = '/categories'}
                 >
                   Browse Categories
                 </Button>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative animate-scale-in stagger-3">
+              <div className="absolute -inset-4 gradient-primary rounded-3xl opacity-20 animate-float"></div>
               <img 
                 src={heroImage} 
                 alt="Sports Equipment Collection"
-                className="w-full h-auto rounded-2xl shadow-card-hover"
+                className="relative w-full h-auto rounded-2xl shadow-card-hover hover-lift"
               />
             </div>
           </div>
@@ -163,8 +164,8 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="text-center">
-                <div className="gradient-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white">
+              <div key={index} className={`text-center animate-fade-in hover-lift stagger-${index + 1}`}>
+                <div className="gradient-primary rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 text-white hover-glow transition-bounce">
                   {feature.icon}
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">{feature.title}</h3>
@@ -188,13 +189,14 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
-              <CategoryCard 
-                key={category.id}
-                name={category.name}
-                image={category.image_url}
-                productCount={0} // You can add a count field to categories table later
-              />
+            {categories.map((category, index) => (
+              <div key={category.id} className={`animate-scale-in stagger-${(index % 4) + 1}`}>
+                <CategoryCard 
+                  name={category.name}
+                  image={category.image_url}
+                  productCount={0} // You can add a count field to categories table later
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -213,20 +215,21 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard 
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                price={Number(product.price)}
-                originalPrice={product.original_price ? Number(product.original_price) : undefined}
-                rating={Number(product.rating)}
-                reviews={product.review_count}
-                image={product.image_url}
-                category={product.category.name}
-                isNew={false} // You can add logic for new products
-                discount={product.discount_percentage}
-              />
+            {products.map((product, index) => (
+              <div key={product.id} className={`animate-fade-in stagger-${(index % 3) + 1}`}>
+                <ProductCard 
+                  id={product.id}
+                  name={product.name}
+                  price={Number(product.price)}
+                  originalPrice={product.original_price ? Number(product.original_price) : undefined}
+                  rating={Number(product.rating)}
+                  reviews={product.review_count}
+                  image={product.image_url}
+                  category={product.category.name}
+                  isNew={false} // You can add logic for new products
+                  discount={product.discount_percentage}
+                />
+              </div>
             ))}
           </div>
           

@@ -12,7 +12,7 @@ const CategoryCard = ({ name, image, productCount }: CategoryCardProps) => {
   
   return (
     <Card 
-      className="group hover:shadow-card-hover transition-smooth cursor-pointer overflow-hidden"
+      className="group hover:shadow-card-hover transition-smooth cursor-pointer overflow-hidden hover-lift hover-glow"
       onClick={() => navigate(`/categories/${name.toLowerCase().replace(/\s+/g, '-')}`)}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary">

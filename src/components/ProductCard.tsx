@@ -33,7 +33,7 @@ const ProductCard = ({
   const navigate = useNavigate();
   
   return (
-    <Card className="group hover:shadow-card-hover transition-smooth overflow-hidden">
+    <Card className="group hover:shadow-card-hover transition-smooth overflow-hidden hover-lift hover-glow">
       <div 
         className="cursor-pointer"
         onClick={() => navigate(`/product/${id}`)}
